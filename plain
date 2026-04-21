@@ -1,0 +1,10 @@
+ed-tech/
+├── index.html          (صفحة تسجيل الدخول)
+├── dashboard.html      (الصفحة الرئيسية بعد الدخول)
+├── courses.html        (صفحة الكورسات)
+├── course-detail.html  (تفاصيل الكورس)
+├── css/
+│   └── style.css
+├── js/
+│   └── app.js
+└── images/
