@@ -1,0 +1,25 @@
+<div class="header-actions">
+    <button class="lang-switch-header" onclick="toggleLang()">
+        <i class="fas fa-globe"></i> EN
+    </button>
+    <button class="notification-btn">
+        <i class="fas fa-bell"></i>
+        <span class="badge">3</span>
+    </button>
+    <div class="user-profile" style="position: relative;">
+        <img src="https://ui-avatars.com/api/?name=User&background=6366f1&color=fff" alt="User">
+        <span>أحمد محمد</span>
+        <div class="user-menu-dropdown">
+            <a href="#" class="dropdown-item">
+                <i class="fas fa-user"></i> الملف الشخصي
+            </a>
+            <a href="#" class="dropdown-item">
+                <i class="fas fa-cog"></i> الإعدادات
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item logout" onclick="logout(); return false;">
+                <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+            </a>
+        </div>
+    </div>
+</div>
