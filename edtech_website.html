@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ed Tech - منصة التعلم الإلكتروني</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #06b6d4;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --dark-light: #1e293b;
+            --gray: #64748b;
+            --light: #f8fafc;
+            --white: #ffffff;
+            --success: #10b981;
+            --danger: #ef4444;
+            --gradient-1: linear-gradient(135deg, #6366f1 0%, #06b6d4 100%);
+            --gradient-2: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', 'Poppins', sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        body.en {
+            font-family: 'Poppins', 'Cairo', sans-serif;
+        }
+
+        /* Login Screen */
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .login-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(1.1);
+        }
+
+        .login-container {
+            background: var(--dark-light);
+            padding: 3rem;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: var(--shadow-xl);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .login-logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-logo i {
+            font-size: 3rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .login-logo h1 {
+            color: var(--white);
+            font-size: 1.8rem;
+            margin-top: 0.5rem;
+            font-weight: 700;
+        }
+
+        .login-logo p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            color: var(--white);
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255,255,255,0.08);
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255,255,255,0.3);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--gradient-1);
+            color: var(--white);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+        }
+
+        .login-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+
+        .login-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .social-login {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: 2px solid rgba(255,255,255,0.1);
+            background: transparent;
+            color: var(--white);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.2rem;
+        }
+
+        .social-btn:hover {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        /* Main Content */
+        .main-content {
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .main-content.visible {
+            opacity: 1;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--dark);
+            text-decoration: none;
+        }
+
+        .logo i {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-1);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .lang-toggle {
+            background: var(--light);
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .lang-toggle:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gradient-1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 8rem 2rem 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content p {
+            font-size: 1.25rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .hero-badges {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .badge-free {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .badge-paid {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--accent);
+        }
+
+        .badge-discount {
+            background: var(--gradient-2);
+            color: var(--white);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .hero-visual {
+            position: relative;
+        }
+
+        .hero-image {
+            width: 100%;
+            border-radius: 24px;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .floating-card {
+            position: absolute;
+            background: var(--white);
+            padding: 1rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .floating-card-1 {
+            top: -20px;
+            right: -20px;
+            animation-delay: 0s;
+        }
+
+        .floating-card-2 {
+            bottom: 20px;
+            left: -30px;
+            animation-delay: 1.5s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Courses Section */
+        .courses-section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .section-header p {
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+
+        .courses-filter {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .course-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.4s;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .course-image {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .course-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .course-card:hover .course-image img {
+            transform: scale(1.1);
+        }
+
+        .course-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .badge-free-course {
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .badge-paid-course {
+            background: var(--accent);
+            color: var(--white);
+        }
+
+        .discount-tag {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--danger);
+            color: var(--white);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .course-content {
+            padding: 1.5rem;
+        }
+
+        .course-category {
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .course-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--dark);
+        }
+
+        .course-description {
+            color: var(--gray);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .course-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+
+        .meta-item i {
+            color: var(--primary);
+        }
+
+        .course-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .course-price {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .price-original {
+            text-decoration: line-through;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .price-current {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .price-currency {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .btn-enroll {
+            padding: 0.75rem 1.5rem;
+            background: var(--gradient-1);
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .btn-enroll:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Features Section */
+        .features-section {
+            background: var(--dark);
+            padding: 5rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .features-section .section-header h2,
+        .features-section .section-header p {
+            color: var(--white);
+        }
+
+        .features-section .section-header p {
+            opacity: 0.7;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--dark-light);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.4s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-1);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            color: var(--white);
+        }
+
+        .feature-card h3 {
+            color: var(--white);
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-card p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 3rem 2rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .footer-brand h3 {
+            color: var(--white);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-brand p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .footer-links h4 {
+            color: var(--white);
+            margin-bottom: 1rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 2rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .nav-links {
+                display: none;
+            }
+
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+
+            .login-container {
+                padding: 2rem;
+                margin: 1rem;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-in {
+            animation: slideIn 0.6s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Overlay -->
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-container">
+            <div class="login-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <h1 data-ar="إد تك" data-en="Ed Tech">Ed Tech</h1>
+                <p data-ar="منصة التعلم الإلكتروني الرائدة" data-en="Leading E-Learning Platform">منصة التعلم الإلكتروني الرائدة</p>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label data-ar="البريد الإلكتروني" data-en="Email Address">البريد الإلكتروني</label>
+                    <input type="email" placeholder="name@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label data-ar="كلمة المرور" data-en="Password">كلمة المرور</label>
+                    <input type="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn btn-primary" data-ar="تسجيل الدخول" data-en="Sign In">تسجيل الدخول</button>
+            </form>
+
+            <div class="social-login">
+                <button class="social-btn"><i class="fab fa-google"></i></button>
+                <button class="social-btn"><i class="fab fa-facebook-f"></i></button>
+                <button class="social-btn"><i class="fab fa-apple"></i></button>
+            </div>
+
+            <div class="login-footer">
+                <p data-ar="ليس لديك حساب؟ <a href='#'>سجل الآن</a>" data-en="Don't have an account? <a href='#'>Register now</a>">ليس لديك حساب؟ <a href="#">سجل الآن</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="#" class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Ed Tech</span>
+                </a>
+
+                <ul class="nav-links">
+                    <li><a href="#home" class="active" data-ar="الرئيسية" data-en="Home">الرئيسية</a></li>
+                    <li><a href="#courses" data-ar="الكورسات" data-en="Courses">الكورسات</a></li>
+                    <li><a href="#features" data-ar="المميزات" data-en="Features">المميزات</a></li>
+                    <li><a href="#about" data-ar="عن المنصة" data-en="About">عن المنصة</a></li>
+                </ul>
+
+                <div class="nav-actions">
+                    <button class="lang-toggle" id="langToggle">EN</button>
+                    <div class="user-avatar">A</div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <div class="hero-badges">
+                    <span class="badge badge-free" data-ar="كورسات مجانية" data-en="Free Courses">كورسات مجانية</span>
+                    <span class="badge badge-paid" data-ar="كورسات مدفوعة" data-en="Premium Courses">كورسات مدفوعة</span>
+                    <span class="badge badge-discount" data-ar="خصم 40%" data-en="40% OFF">خصم 40%</span>
+                </div>
+                <h1 data-ar="تعلم المستقبل اليوم" data-en="Learn the Future Today">تعلم المستقبل اليوم</h1>
+                <p data-ar="انضم إلى آلاف المتعلمين وابدأ رحلتك في عالم التسويق الرقمي، تطوير الألعاب، التصميم والمزيد" data-en="Join thousands of learners and start your journey in digital marketing, game development, design and more">انضم إلى آلاف المتعلمين وابدأ رحلتك في عالم التسويق الرقمي، تطوير الألعاب، التصميم والمزيد</p>
+
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label" data-ar="كورس" data-en="Courses">كورس</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">10K+</div>
+                        <div class="stat-label" data-ar="متعلم" data-en="Learners">متعلم</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">4.9</div>
+                        <div class="stat-label" data-ar="تقييم" data-en="Rating">تقييم</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=400&fit=crop" alt="Students learning" class="hero-image">
+                <div class="floating-card floating-card-1">
+                    <i class="fas fa-star" style="color: var(--accent);"></i>
+                    <span style="font-weight: 700;">4.9</span>
+                </div>
+                <div class="floating-card floating-card-2">
+                    <i class="fas fa-users" style="color: var(--primary);"></i>
+                    <span style="font-weight: 700;">10K+</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Courses Section -->
+        <section class="courses-section" id="courses">
+            <div class="section-header">
+                <h2 data-ar="استكشف كورساتنا" data-en="Explore Our Courses">استكشف كورساتنا</h2>
+                <p data-ar="اختر من مجموعة متنوعة من الكورسات المجانية والمدفوعة" data-en="Choose from a variety of free and premium courses">اختر من مجموعة متنوعة من الكورسات المجانية والمدفوعة</p>
+            </div>
+
+            <div class="courses-filter">
+                <button class="filter-btn active" data-filter="all" data-ar="الكل" data-en="All">الكل</button>
+                <button class="filter-btn" data-filter="free" data-ar="مجاني" data-en="Free">مجاني</button>
+                <button class="filter-btn" data-filter="paid" data-ar="مدفوع" data-en="Premium">مدفوع</button>
+            </div>
+
+            <div class="courses-grid" id="coursesGrid">
+                <!-- Courses will be inserted by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section" id="features">
+            <div class="features-container">
+                <div class="section-header">
+                    <h2 data-ar="لماذا تختار إد تك؟" data-en="Why Choose Ed Tech?">لماذا تختار إد تك؟</h2>
+                    <p data-ar="نقدم لك تجربة تعلم فريدة مع أفضل المميزات" data-en="We offer you a unique learning experience with the best features">نقدم لك تجربة تعلم فريدة مع أفضل المميزات</p>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <h3 data-ar="شهادات معتمدة" data-en="Certified Certificates">شهادات معتمدة</h3>
+                        <p data-ar="احصل على شهادات معتمدة عند إتمام كل كورس" data-en="Get certified certificates upon completing each course">احصل على شهادات معتمدة عند إتمام كل كورس</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-infinity"></i>
+                        </div>
+                        <h3 data-ar="وصول مدى الحياة" data-en="Lifetime Access">وصول مدى الحياة</h3>
+                        <p data-ar="تعلم في أي وقت ومن أي مكان بدون قيود" data-en="Learn anytime, anywhere without restrictions">تعلم في أي وقت ومن أي مكان بدون قيود</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <h3 data-ar="مدربون خبراء" data-en="Expert Instructors">مدربون خبراء</h3>
+                        <p data-ar="تعلم من أفضل المدربين ذوي الخبرة العملية" data-en="Learn from the best instructors with practical experience">تعلم من أفضل المدربين ذوي الخبرة العملية</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h3 data-ar="دعم فني 24/7" data-en="24/7 Support">دعم فني 24/7</h3>
+                        <p data-ar="فريق دعم متخصص جاهز لمساعدتك في أي وقت" data-en="Dedicated support team ready to help you anytime">فريق دعم متخصص جاهز لمساعدتك في أي وقت</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-brand">
+                    <h3><i class="fas fa-graduation-cap"></i> Ed Tech</h3>
+                    <p data-ar="منصة التعلم الإلكتروني الرائدة في مصر والعالم العربي. نؤمن بأن التعليم حق للجميع." data-en="The leading e-learning platform in Egypt and the Arab world. We believe education is a right for everyone.">منصة التعلم الإلكتروني الرائدة في مصر والعالم العربي. نؤمن بأن التعليم حق للجميع.</p>
+                </div>
+                <div class="footer-links">
+                    <h4 data-ar="الكورسات" data-en="Courses">الكورسات</h4>
+                    <ul>
+                        <li><a href="#" data-ar="التسويق الرقمي" data-en="Digital Marketing">التسويق الرقمي</a></li>
+                        <li><a href="#" data-ar="صناعة المحتوى" data-en="Content Creation">صناعة المحتوى</a></li>
+                        <li><a href="#" data-ar="تطوير الألعاب" data-en="Game Development">تطوير الألعاب</a></li>
+                        <li><a href="#" data-ar="التصميم" data-en="Design">التصميم</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4 data-ar="الشركة" data-en="Company">الشركة</h4>
+                    <ul>
+                        <li><a href="#" data-ar="عن المنصة" data-en="About">عن المنصة</a></li>
+                        <li><a href="#" data-ar="المدربون" data-en="Instructors">المدربون</a></li>
+                        <li><a href="#" data-ar="الشراكات" data-en="Partnerships">الشراكات</a></li>
+                        <li><a href="#" data-ar="تواصل معنا" data-en="Contact">تواصل معنا</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4 data-ar="المساعدة" data-en="Support">المساعدة</h4>
+                    <ul>
+                        <li><a href="#" data-ar="الأسئلة الشائعة" data-en="FAQ">الأسئلة الشائعة</a></li>
+                        <li><a href="#" data-ar="سياسة الخصوصية" data-en="Privacy Policy">سياسة الخصوصية</a></li>
+                        <li><a href="#" data-ar="شروط الاستخدام" data-en="Terms of Use">شروط الاستخدام</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Ed Tech. <span data-ar="جميع الحقوق محفوظة" data-en="All rights reserved">جميع الحقوق محفوظة</span>.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Data
+        const coursesData = [
+            {
+                id: 1,
+                title: { ar: "التسويق الرقمي الشامل", en: "Complete Digital Marketing" },
+                category: { ar: "تسويق", en: "Marketing" },
+                description: { 
+                    ar: "تعلم استراتيجيات التسويق الرقمي، SEO، وسائل التواصل الاجتماعي، والإعلانات الممولة",
+                    en: "Learn digital marketing strategies, SEO, social media, and paid advertising"
+                },
+                image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=250&fit=crop",
+                type: "paid",
+                originalPrice: 2500,
+                currentPrice: 1500,
+                duration: "24 ساعة",
+                lessons: 45,
+                students: 1200,
+                rating: 4.8
+            },
+            {
+                id: 2,
+                title: { ar: "صناعة المحتوى الرقمي", en: "Digital Content Creation" },
+                category: { ar: "محتوى", en: "Content" },
+                description: { 
+                    ar: "أنشئ محتوى احترافي على يوتيوب، تيك توك، ومنصات التواصل الاجتماعي",
+                    en: "Create professional content on YouTube, TikTok, and social media platforms"
+                },
+                image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400&h=250&fit=crop",
+                type: "free",
+                originalPrice: 0,
+                currentPrice: 0,
+                duration: "18 ساعة",
+                lessons: 32,
+                students: 3500,
+                rating: 4.9
+            },
+            {
+                id: 3,
+                title: { ar: "تطوير الألعاب بـ Unity", en: "Game Development with Unity" },
+                category: { ar: "برمجة", en: "Programming" },
+                description: { 
+                    ar: "ابنِ ألعاب ثنائية وثلاثية الأبعاد احترافية باستخدام محرك Unity",
+                    en: "Build professional 2D and 3D games using Unity engine"
+                },
+                image: "https://images.unsplash.com/photo-1556438064-2d7646166914?w=400&h=250&fit=crop",
+                type: "paid",
+                originalPrice: 3000,
+                currentPrice: 1800,
+                duration: "40 ساعة",
+                lessons: 60,
+                students: 800,
+                rating: 4.7
+            },
+            {
+                id: 4,
+                title: { ar: "الرسوم المتحركة (Animation)", en: "Animation Fundamentals" },
+                category: { ar: "تصميم", en: "Design" },
+                description: { 
+                    ar: "تعلم أساسيات الرسوم المتحركة ثنائية وثلاثية الأبعاد باستخدام أدوات احترافية",
+                    en: "Learn 2D and 3D animation fundamentals using professional tools"
+                },
+                image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400&h=250&fit=crop",
+                type: "paid",
+                originalPrice: 2200,
+                currentPrice: 1320,
+                duration: "30 ساعة",
+                lessons: 50,
+                students: 950,
+                rating: 4.6
+            },
+            {
+                id: 5,
+                title: { ar: "تصميم الألعاب (Game Design)", en: "Game Design Masterclass" },
+                category: { ar: "تصميم", en: "Design" },
+                description: { 
+                    ar: "تعلم تصميم ميكانيكيات اللعب، القصص، والعوالم الافتراضية",
+                    en: "Learn game mechanics design, storytelling, and virtual worlds"
+                },
+                image: "https://images.unsplash.com/photo-1552820728-8b83bb6b2b0a?w=400&h=250&fit=crop",
+                type: "free",
+                originalPrice: 0,
+                currentPrice: 0,
+                duration: "15 ساعة",
+                lessons: 25,
+                students: 2100,
+                rating: 4.8
+            },
+            {
+                id: 6,
+                title: { ar: "تطوير الألعاب بـ Unreal Engine", en: "Unreal Engine Development" },
+                category: { ar: "برمجة", en: "Programming" },
+                description: { 
+                    ar: "أنشئ ألعاب AAA باستخدام أقوى محركات الألعاب في العالم",
+                    en: "Create AAA games using the world's most powerful game engine"
+                },
+                image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&h=250&fit=crop",
+                type: "paid",
+                originalPrice: 3500,
+                currentPrice: 2100,
+                duration: "50 ساعة",
+                lessons: 75,
+                students: 600,
+                rating: 4.9
+            }
+        ];
+
+        // State
+        let currentLang = 'ar';
+        let currentFilter = 'all';
+
+        // DOM Elements
+        const loginOverlay = document.getElementById('loginOverlay');
+        const mainContent = document.getElementById('mainContent');
+        const loginForm = document.getElementById('loginForm');
+        const langToggle = document.getElementById('langToggle');
+        const coursesGrid = document.getElementById('coursesGrid');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+
+        // Login Handler
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            loginOverlay.classList.add('hidden');
+            setTimeout(() => {
+                mainContent.classList.add('visible');
+            }, 300);
+        });
+
+        // Language Toggle
+        langToggle.addEventListener('click', () => {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            document.body.classList.toggle('en');
+            document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+            document.documentElement.lang = currentLang;
+            langToggle.textContent = currentLang === 'ar' ? 'EN' : 'عربي';
+            updateLanguage();
+            renderCourses();
+        });
+
+        function updateLanguage() {
+            document.querySelectorAll('[data-ar][data-en]').forEach(el => {
+                if (el.tagName === 'INPUT') {
+                    el.placeholder = el.getAttribute(`data-${currentLang}`);
+                } else {
+                    el.textContent = el.getAttribute(`data-${currentLang}`);
+                }
+            });
+        }
+
+        // Filter Handler
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                renderCourses();
+            });
+        });
+
+        // Render Courses
+        function renderCourses() {
+            const filtered = currentFilter === 'all' 
+                ? coursesData 
+                : coursesData.filter(c => c.type === currentFilter);
+
+            coursesGrid.innerHTML = filtered.map((course, index) => `
+                <div class="course-card fade-in" style="animation-delay: ${index * 0.1}s">
+                    <div class="course-image">
+                        <img src="${course.image}" alt="${course.title[currentLang]}" loading="lazy">
+                        <span class="course-badge ${course.type === 'free' ? 'badge-free-course' : 'badge-paid-course'}">
+                            ${course.type === 'free' 
+                                ? (currentLang === 'ar' ? 'مجاني' : 'Free') 
+                                : (currentLang === 'ar' ? 'مدفوع' : 'Premium')
+                            }
+                        </span>
+                        ${course.type === 'paid' ? '<span class="discount-tag">-40%</span>' : ''}
+                    </div>
+                    <div class="course-content">
+                        <div class="course-category">${course.category[currentLang]}</div>
+                        <h3 class="course-title">${course.title[currentLang]}</h3>
+                        <p class="course-description">${course.description[currentLang]}</p>
+                        <div class="course-meta">
+                            <span class="meta-item"><i class="far fa-clock"></i> ${course.duration}</span>
+                            <span class="meta-item"><i class="far fa-play-circle"></i> ${course.lessons} ${currentLang === 'ar' ? 'درس' : 'Lessons'}</span>
+                            <span class="meta-item"><i class="fas fa-users"></i> ${course.students}</span>
+                            <span class="meta-item"><i class="fas fa-star" style="color: var(--accent);"></i> ${course.rating}</span>
+                        </div>
+                        <div class="course-footer">
+                            <div class="course-price">
+                                ${course.type === 'paid' ? `
+                                    <span class="price-original">${course.originalPrice} EGP</span>
+                                    <span class="price-current">${course.currentPrice}</span>
+                                    <span class="price-currency">EGP</span>
+                                ` : `
+                                    <span class="price-current" style="color: var(--success);">${currentLang === 'ar' ? 'مجاني' : 'Free'}</span>
+                                `}
+                            </div>
+                            <button class="btn-enroll" data-ar="الالتحاق الآن" data-en="Enroll Now">${currentLang === 'ar' ? 'الالتحاق الآن' : 'Enroll Now'}</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Active Nav Link
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const scrollY = window.scrollY;
+
+            sections.forEach(section => {
+                const sectionHeight = section.offsetHeight;
+                const sectionTop = section.offsetTop - 100;
+                const sectionId = section.getAttribute('id');
+
+                if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                    document.querySelectorAll('.nav-links a').forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        });
+
+        // Initialize
+        renderCourses();
+    </script>
+</body>
+</html>
