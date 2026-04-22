@@ -1,6 +1,0 @@
-<div class="sidebar-footer">
-    <a href="#" class="nav-item logout" onclick="logout(); return false;">
-        <i class="fas fa-sign-out-alt"></i>
-        <span>تسجيل الخروج</span>
-    </a>
-</div>
